@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chatify</title>
+        <link rel="stylesheet" href="{{ static_url('main/main.css') }}" type="text/css">
+    </head>
+    <body>
+        <section class="welcome">
+            <div class="welcome-header">
+                <p class="welcome_header-text">
+                    Tell me something
+                </p>
+            </div>
+        </section>
+        <section class="activity">
+            <div class="activity-body">
+                <div class="activity-result">
+                    {% for reply in replies %}
+                        {% module message(user, reply) %}
+                    {% end %}
+                    <div class="activity-result-r"></div>
+                </div>
+                <div class="activity-input">
+                    <form id="form-input" method="post" action="chat/input">
+                        <textarea class="form-input-content" name="message-input" form="form-input" placeholder="Tell me..."></textarea>
+                        <input class="form-input-submit" type="submit" value="SEND"/>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <script src="{{ static_url('main/main.js') }}" type="text/javascript">
+            let application = new Application();
+        </script>
+    </body>
+ </html>

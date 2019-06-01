@@ -1,0 +1,18 @@
+<html lang="en">
+<body>
+    <div class="message {{ style['direction'] }}">
+        <div class="message-header">
+            <img class="message-avatar" src="{{ message.author.profile }}"/>
+            <p class="message-author">{{ message.author.name }}</p>
+        </div>
+        <div class="message-content">
+            <div class="message-response">
+                <p class="message-response-content">{{ message.content }}</p>
+            </div>
+            <div class="message-miscellaneous">
+                <p class="message-miscellaneous-content">{{ message.time }}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

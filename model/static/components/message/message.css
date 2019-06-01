@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.message {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.direction-lr {
+    flex-direction: row;
+}
+
+.direction-rl {
+    flex-direction: row-reverse;
+}
+
+.message-header, .message-content {
+    margin: 0 8px;
+}
+
+.message-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.message-avatar, .message-author {
+    margin: 4px 0;
+}
+
+.message-avatar {
+    width: 32px;
+    height: 32px;
+}
+
+.message-author {
+    color: #acacac;
+    font-family: "SF Compact Text", sans-serif;
+    letter-spacing: 0.2em;
+    font-size: 8px;
+    text-align: center;
+}
+
+.message-content {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    flex-direction: column;
+}
+
+.message-response, .message-miscellaneous {
+    margin: 2px 0;
+}
+
+.message-response {
+    display: flex;
+    background-color: #f2f2f2;
+    padding: 12px 32px;
+    border-radius: 16px 16px 16px 4px;
+}
+
+.message-response-content {
+    color: #454545;
+    font-family: "SF Compact Text", sans-serif;
+    letter-spacing: 1.4px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.message-miscellaneous {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.message-miscellaneous-content {
+    margin: 0 8px;
+    color: #acacac;
+    font-weight: bold;
+    font-family: "SF Compact Text", sans-serif;
+    letter-spacing: 1.4px;
+    font-size: 12px;
+    text-align: left;
+}
