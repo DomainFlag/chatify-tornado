@@ -2,11 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Chatify</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ static_url('welcome/style.css') }}" type="text/css">
 </head>
 <body>
-    <button class="welcome-submit">
-        Welcome
-    </button>
+    <div class="welcome">
+        <div class="welcome-header">
+            <div class="header-content">
+                <p class="content-primary">No thought to be dragged.</p>
+                <p class="content-secondary">It's never been easier to chat.</p>
+            </div>
+            <div class="welcome-action">
+                <button class="action-submit">
+                    Welcome
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ static_url('welcome/script.js') }}" type="text/javascript"></script>
 </body>
 </html>

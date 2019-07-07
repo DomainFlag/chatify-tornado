@@ -1,0 +1,53 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body, .welcome {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.welcome-header {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
+}
+
+.header-content {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.content-primary {
+    display: inline-block;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: "Lato", sans-serif;
+}
+
+.content-secondary {
+    font-size: 32px;
+    font-weight: bold;
+    font-family: "Lato", sans-serif;
+}
+
+.welcome-action {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}

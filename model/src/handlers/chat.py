@@ -4,8 +4,9 @@ from model.src.models import Reply, User
 
 class ChatHandler(BaseHandler):
 
-    def initialize(self, messenger):
+    def initialize(self, connection, messenger):
 
+        self.connection = connection
         self.messenger = messenger
 
     def post(self):

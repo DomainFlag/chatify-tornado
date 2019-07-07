@@ -1,6 +1,7 @@
 .git/
 .idea/
 
+play-area/
 venv/
 
 **/app_config.*

@@ -3,9 +3,13 @@ from model.src.handlers import BaseHandler
 
 class MainHandler(BaseHandler):
 
-    def initialize(self, messenger):
+    def initialize(self, connection, messenger):
 
+        self.connection = connection
         self.messenger = messenger
+
+    def prepare(self):
+        pass
 
     def get(self):
 

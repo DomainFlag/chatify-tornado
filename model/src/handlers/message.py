@@ -3,8 +3,9 @@ from model.src.handlers import BaseSocketHandler
 
 class MessageHandler(BaseSocketHandler):
 
-    def initialize(self, messenger):
+    def initialize(self, connection, messenger):
 
+        self.connection = connection
         self.messenger = messenger
 
     def open(self):

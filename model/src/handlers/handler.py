@@ -16,12 +16,10 @@ class BaseHandler(RequestHandler):
         :return: 
         """""
 
-        # get current authenticated user
         user = self.get_user()
 
         if user is None:
 
-            # authentication required
             self.redirect("/", permanent = True)
 
             raise Finish()
@@ -44,7 +42,7 @@ class BaseHandler(RequestHandler):
         if user is not None:
 
             # authentication passed
-            self.redirect("/main", permanent = True)
+            self.redirect("/index", permanent = True)
 
 
 class BaseSocketHandler(WebSocketHandler, BaseHandler):
