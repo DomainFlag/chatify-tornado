@@ -3,21 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Chatify</title>
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ static_url('welcome/style.css') }}" type="text/css">
 </head>
 <body>
+    <div class="header">
+        <div class="header-brand">
+             <p class="brand-title">Chatify</p>
+        </div>
+        <div class="header-random"></div>
+    </div>
     <div class="welcome">
-        <div class="welcome-header">
-            <div class="header-content">
-                <p class="content-primary">No thought to be dragged.</p>
-                <p class="content-secondary">It's never been easier to chat.</p>
+        <div class="welcome-content">
+            <div class="content-text">
+                <p class="content-primary">Get in touch in no <span class="content-swappable">hurdle</span>.</p>
+                <p class="content-secondary">Reach anyone with easy at a click, text, image or thought, anything.</p>
             </div>
-            <div class="welcome-action">
-                <button class="action-submit">
-                    Welcome
-                </button>
+            <div class="content-action">
+                <div class="action-submit">
+                    Get Started
+                </div>
             </div>
+        </div>
+        <div class="welcome-interactive">
+            <img class="interactive-asset" src="{{ static_url('assets/balloon.svg') }}" alt="Light Balloon"/>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-info">
+            <p class="info-link">Learn more</p>
+            <img class="info-asset" src="{{ static_url('assets/arrow.svg') }}" alt="Learn More"/>
+        </div>
+        <div class="footer-social">
+            <a class="social-link" href="https://github.com/DomainFlag" target="_blank" rel="noopener noreferrer">
+                <img class="link-asset" src="{{ static_url('assets/social-github.svg') }}" alt="Github Link"/>
+            </a>
         </div>
     </div>
     <script src="{{ static_url('welcome/script.js') }}" type="text/javascript"></script>
