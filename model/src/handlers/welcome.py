@@ -1,18 +1,11 @@
 from typing import Optional, Awaitable
-from model.src.handlers import BaseHandler
-import tornado.ioloop
-import asyncio
-import time
-import tornado.web
-from tornado import gen
-from tornado.ioloop import IOLoop
+from tornado.web import RequestHandler
 
 
-class WelcomeHandler(BaseHandler):
+class WelcomeHandler(RequestHandler):
 
-    def prepare(self):
+    def data_received(self, chunk: bytes) -> Optional[Awaitable[None]]:
         pass
 
     def get(self):
-
         self.render("welcome.html")

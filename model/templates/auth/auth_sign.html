@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chatify</title>
+        <link rel="stylesheet" href="{{ static_url('auth/style.css') }}" type="text/css">
+    </head>
+    <body>
+        <div class="auth-header">
+            <div class="header-brand">
+                <p class="brand-title">Chatify</p>
+            </div>
+            <div class="auth-divider"></div>
+        </div>
+        <div class="auth-container">
+            <div class="container-social">
+                <a class="social-facebook" href="http://localhost:8000/auth/sign/facebook">Sign with Facebook</a>
+            </div>
+            <div class="container-action">
+                <div class="action-description">
+                    <div class="auth-divider description-divider"></div>
+                    <p class="description-bare">Or sign up with your email</p>
+                </div>
+                <form class="action-form" method="post" action="auth_sign.html" novalidate="novalidate">
+                    <ul class="form-elements">
+                        <li class="form-element">
+                            <label class="auth-placeholder" for="auth-email">Email</label>
+                            <input id="auth-email" class="element-input form-email" type="text" name="email" required/>
+                        </li>
+                        <li class="form-element">
+                            <label class="auth-placeholder" for="auth-password">Password</label>
+                            <input id="auth-password" class="element-input form-password" type="password" name="password" required/>
+                        </li>
+                    </ul>
+                    <div class="form-action">
+                        <input class="auth-submit" type="submit" value="SIGN UP"/>
+                        <div class="auth-remember-container">
+                            <input class="auth-remember" type="checkbox" name="remember" value="true"/>
+                            <p class="auth-remember-text">Remember Me</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="{{ static_url('auth/script.js') }}" type="text/javascript">
+            let application = new Application();
+        </script>
+    </body>
+ </html>

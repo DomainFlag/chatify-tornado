@@ -2,47 +2,45 @@ from typing import Optional, Awaitable, Union
 
 from tornado.web import RequestHandler, Finish
 from tornado.websocket import WebSocketHandler
+from tornado import gen, escape
 
 
 class BaseHandler(RequestHandler):
 
+    def initialize(self, connection):
+        self.connection = connection
+
     def data_received(self, chunk: bytes) -> Optional[Awaitable[None]]:
         pass
 
-    def prepare(self):
+    @gen.coroutine
+    def get_current_user(self):
+        token_raw = self.get_secure_cookie("token")
+        token = escape.native_str(token_raw)
+
+        user_id = yield self.connection.conn.hget("tokens", token)
+        user = yield self.connection.conn.hgetall("users:" + escape.native_str(user_id))
+
+        return user
+
+    async def prepare(self):
         """ middleware auth
         
         Override for basic request handler
         :return: 
         """""
 
-        user = self.get_user()
-
-        if user is None:
-
-            self.redirect("/", permanent = True)
+        user = await self.get_current_user()
+        if not user:
+            await self.redirect("/", permanent = True)
 
             raise Finish()
-
-        self.base_prepare()
+        else:
+            await self.base_prepare()
 
     def base_prepare(self) -> Optional[Awaitable[None]]:
 
         pass
-
-    def get_user(self):
-
-        return None
-
-    def redirect_auth(self):
-
-        # get current authenticated user
-        user = self.get_user()
-
-        if user is not None:
-
-            # authentication passed
-            self.redirect("/index", permanent = True)
 
 
 class BaseSocketHandler(WebSocketHandler, BaseHandler):

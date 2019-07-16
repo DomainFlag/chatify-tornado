@@ -13,7 +13,7 @@ class MainHandler(BaseHandler):
 
     def get(self):
 
-        self.render("main.html", user = self.get_user(), replies = self.messenger.replies)
+        self.render("main.html")
 
     def post(self):
 

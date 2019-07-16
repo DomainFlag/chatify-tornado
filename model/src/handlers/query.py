@@ -3,7 +3,6 @@ from model.src.models import Reply, User
 
 import jsonpickle
 
-
 class QueryHandler(BaseHandler):
 
     def prepare(self):
