@@ -4,12 +4,10 @@ import tornado.httpclient
 import os
 import model.src.handlers as handlers
 import model.src.modules as modules
-import aioredis
-import asyncio
 
-from aioredis import Redis
 from tornado.web import Application, url
 from model.src.models.messenger import Messenger
+from model.src.connection import Connection
 
 from .config import configuration
 
@@ -30,18 +28,6 @@ settings = {
     "facebook_api_key" : configuration["facebook_api_key"],
     "facebook_secret" : configuration["facebook_secret"]
 }
-
-
-class Connection:
-
-    def __init__(self):
-
-        self.loop = asyncio.get_event_loop()
-        self.conn = self.loop.run_until_complete(self.create_connection())
-
-    async def create_connection(self) -> Redis:
-
-        return await aioredis.create_redis('redis://localhost', loop = self.loop)
 
 
 def create_app():
