@@ -1,20 +1,22 @@
-from model.src.handlers import BaseHandler
+from tornado.web import authenticated
+from model.src.handlers import BaseAuthHandler, BaseHandler
+from model.src.connection import Connection
+from model.src.models import Messenger
 
 
 class MainHandler(BaseHandler):
 
-    def initialize(self, connection, messenger):
+    mess: Messenger
 
-        self.connection = connection
-        self.messenger = messenger
+    def initialize(self, conn: Connection, mess: Messenger):
+        super().initialize(conn)
 
-    def prepare(self):
-        pass
+        self.mess = mess
 
+    @authenticated
     def get(self):
-
         self.render("main.html")
 
+    @authenticated
     def post(self):
-
         print(self.get_body_argument("form-input-content"))

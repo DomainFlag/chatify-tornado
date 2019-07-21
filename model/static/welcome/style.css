@@ -123,6 +123,8 @@ body {
 }
 
 .action-submit {
+    cursor: pointer;
+    user-select: none;
     display: flex;
     align-items: center;
     min-width: 64px;
@@ -134,6 +136,11 @@ body {
     color: white;
     background-color: #F9690E;
     border-radius: 28px;
+    border: none
+}
+
+.action-submit:hover {
+    box-shadow: 1.5px 1.5px 4px 1px rgba(250, 105, 15, 0.3);
 }
 
 .welcome-interactive {

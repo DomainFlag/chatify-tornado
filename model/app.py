@@ -23,6 +23,7 @@ settings = {
     "template_path" : os.path.join(os.path.dirname(__file__), "templates"),
     "static_path" : os.path.join(os.path.dirname(__file__), "static"),
     "compiled_template_cache" : False,
+    "debug" : True,
     "login_url" : "/auth/login",
     "cookie_secret" : configuration["cookie_secret"],
     "facebook_api_key" : configuration["facebook_api_key"],
@@ -32,16 +33,17 @@ settings = {
 
 def create_app():
 
-    connection = Connection()
-    messenger = Messenger()
+    conn = Connection.initialize_connection()
+    mess = Messenger()
 
-    bundle = dict({"connection": connection, "messenger": messenger})
+    bundle = dict({"conn": conn, "mess": mess})
 
     return Application([
-        url(r"/", handlers.WelcomeHandler),
-        url(r"/auth/sign", handlers.AuthSignHandler, {"connection": connection}),
-        url(r"/auth/sign/facebook", handlers.AuthFacebookSignHandler, {"connection": connection}),
-        url(r"/auth/login", handlers.AuthLoginHandler, {"connection": connection}),
+        url(r"/", handlers.WelcomeHandler, {"conn": conn}),
+        url(r"/auth/sign", handlers.AuthSignHandler, {"conn": conn}),
+        url(r"/auth/sign/facebook", handlers.AuthFacebookSignHandler, {"conn": conn}),
+        url(r"/auth/login", handlers.AuthLoginHandler, {"conn": conn}),
+        url(r"/auth/logout", handlers.AuthLogoutHandler, {"conn": conn}),
         url(r"/chatify", handlers.MainHandler, bundle),
         url(r"/query", handlers.QueryHandler, bundle),
         url(r"/user", handlers.UserHandler),

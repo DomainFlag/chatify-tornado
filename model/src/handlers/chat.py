@@ -1,13 +1,8 @@
-from model.src.handlers import BaseHandler
+from model.src.handlers import BaseAppHandler
 from model.src.models import Reply, User
 
 
-class ChatHandler(BaseHandler):
-
-    def initialize(self, connection, messenger):
-
-        self.connection = connection
-        self.messenger = messenger
+class ChatHandler(BaseAppHandler):
 
     def post(self):
 
@@ -19,6 +14,6 @@ class ChatHandler(BaseHandler):
 
             reply = Reply(user, message_input)
 
-            self.messenger.replies.append(reply)
+            self.mess.replies.append(reply)
 
             self.redirect("/", permanent = True)

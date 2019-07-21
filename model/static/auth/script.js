@@ -12,3 +12,21 @@
 //     });
 //     request.send();
 // });
+
+let formElements = document.getElementsByClassName("form-element");
+for(let g = 0; g < formElements.length; g++) {
+    let formElement = formElements[g];
+
+    let inputFormElement = formElement.querySelector(".element-input");
+    let labelFormElement = formElement.querySelector(".auth-placeholder");
+
+    inputFormElement.addEventListener("focus", (event) => {
+        labelFormElement.classList.replace("auth-placeholder-idle", "auth-placeholder-active");
+    });
+
+    inputFormElement.addEventListener("blur", (event) => {
+        if(inputFormElement.value == null || inputFormElement.value.length === 0) {
+            labelFormElement.classList.replace("auth-placeholder-active", "auth-placeholder-idle");
+        }
+    });
+}

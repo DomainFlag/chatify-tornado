@@ -2,23 +2,29 @@ import unittest
 import asyncio
 
 from model.src.connection import Connection
+from model.src.models import User
 
 
 class RedisCommandTest(unittest.TestCase):
 
     def test_command(self):
-        self.conn = Connection()
-
         loop = asyncio.get_event_loop()
-        loop.run_until_complete(self.exec_redis_command())
-        loop.run_until_complete(self.conn.close_connection())
+        conn = Connection.initialize_connection(loop)
+
+        loop.run_until_complete(self.exec_redis_command(conn))
+
+        loop.run_until_complete(conn.close_connection())
         loop.close()
 
-    async def exec_redis_command(self):
-        # aioredis command output testing
-        value = await self.conn.conn.sismember("names", "Jane")
-        print(value)
-        print(type(value))
+    @staticmethod
+    async def exec_redis_command(conn):
+        """Redis command execution test"""
+        value = await conn.hgetall("users:21")
+
+        user = User()
+        user.decode(user, value)
+
+        print(user.__dict__)
 
 
 if __name__ == '__main__':

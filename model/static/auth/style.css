@@ -70,15 +70,17 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-transform: uppercase;
     height: 56px;
     width: auto;
-    padding: 16px 32px;
+    padding: 8px 28px;
     background-color: #3b5998;
     border: none;
     outline: none;
     font-family: Circular, Helvetica, Arial, sans-serif;
     border-radius: 28px;
-    font-size: 20px;
+    letter-spacing: 2px;
+    font-size: 16px;
     color: white;
 }
 
@@ -137,7 +139,7 @@ body {
 }
 
 .form-elements > * {
-    margin: 8px 0;
+    margin: 12px 0;
 }
 
 .form-element {
@@ -147,22 +149,44 @@ body {
 
 .auth-placeholder {
     position: absolute;
-    font-family: Circular, Helvetica, Arial, sans-serif;
-    color: darkgray;
-    transform: translate(16px, calc(24px - 50%));
+    background-color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px;
+    font-family: Calibre, Circular, Helvetica, Arial, sans-serif;
+    color: #666666;
+    transition: transform 100ms ease-in-out;
+}
+
+.auth-placeholder-idle {
+    transform: translate(9.25px, calc(28px - 50%));
+}
+
+.auth-placeholder-active {
+    transform: translate(9.25px, -50%);
 }
 
 .element-input {
     display: flex;
-    border: 1px solid lightgray;
-    border-radius: 2px;
-    padding: 0 16px;
-    height: 48px;
-    width: 320px;
+    border: 1.25px solid #e0e0e0;
+    background-color: transparent;
+    border-radius: 4px;
+    color: #212121;
+    font-family: Calibre, Circular, Helvetica, Arial, sans-serif;
+    padding: 0 12px;
+    height: 56px;
+    width: 280px;
 }
 
 .element-input:focus {
     outline: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
 .form-action {
@@ -181,6 +205,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-transform: uppercase;
     height: 40px;
     width: auto;
     padding: 8px 16px;
@@ -205,4 +230,28 @@ body {
 .auth-remember-text {
     font-family: Calibre, Circular, Helvetica, Arial, sans-serif;
     font-size: 14px;
+}
+
+.action-redirection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.redirection-info {
+    color: #212121;
+    font-size: 14px;
+    font-family: Calibre, Circular, Helvetica, Arial, sans-serif;
+}
+
+.redirection-info:first-letter {
+    text-transform: uppercase;
+}
+
+.redirection-mode {
+    color: #875F9A;
+    font-weight: bold;
+    letter-spacing: 0.75px;
+    text-transform: capitalize;
 }
