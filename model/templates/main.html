@@ -1,28 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
         <title>Chatify</title>
         <link rel="stylesheet" href="{{ static_url('main/style.css') }}" type="text/css">
     </head>
     <body>
-        <section class="welcome">
-            <div class="welcome-header">
-                <p class="welcome_header-text">
-                    Tell me something
-                </p>
+        <section class="chatify-settings">
+            <div class="chatify-profile">
+                <div class="social-profile">
+                    <img class="profile-picture" src="{{ user.picture }}" alt="My Profile"/>
+                    <p class="profile-name">{{ user.name }}</p>
+                </div>
             </div>
         </section>
-        <section class="activity">
-            <div class="activity-body">
-                <div class="activity-result">
-                    <div class="activity-result-r"></div>
-                </div>
-                <div class="activity-input">
-                    <form id="form-input" method="post" action="chat/input">
-                        <textarea class="form-input-content" name="message-input" form="form-input" placeholder="Tell me..."></textarea>
-                        <input class="form-input-submit" type="submit" value="SEND"/>
-                    </form>
-                </div>
+        <div class="activity-divider"></div>
+        <section class="chatify-action">
+            <div class="activity-result">
+            </div>
+            <div class="activity-divider-full"></div>
+            <div class="activity-input">
+                <form id="form-input" method="post" action="chat/input">
+                    <textarea class="form-input-content" name="message-input" form="form-input" placeholder="Type here..."></textarea>
+                    <input class="form-input-submit" type="submit" value="SEND"/>
+                </form>
+            </div>
+        </section>
+        <div class="activity-divider"></div>
+        <section class="chatify-social">
+            <div class="social-search">
+
+            </div>
+            <div class="social-friends">
+                {% if friends is not None %}
+                    {% for friend in friends %}
+                        <div>
+                            friend
+                        </div>
+                    {% end %}
+                {% end %}
             </div>
         </section>
         <script src="{{ static_url('main/script.js') }}" type="text/javascript">

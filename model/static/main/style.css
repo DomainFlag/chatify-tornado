@@ -2,7 +2,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+a {
     text-decoration: none;
+}
+
+a, p, span {
+    font-family: Circular, Calibre, Helvetica Neue, Segoe UI, Helvetica, Arial, Lucida Grande, sans-serif;
 }
 
 html, body {
@@ -12,54 +19,39 @@ html, body {
 
 body {
     display: flex;
-    flex-direction: row;
-}
-
-.welcome, .activity {
-    display: flex;
-    height: 100%;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
-    flex: 1;
-    padding: 48px;
-}
-
-.welcome {
-    display: none;
-}
-
-.welcome-header {
-    /**/
-}
-
-.welcome_header-text {
-    font-family: "SF Compact Display", sans-serif;
-    font-size: 24px;
-}
-
-.activity {
     flex-direction: column;
+    padding: 0 25%;
 }
 
-.activity-body {
-    position: relative;
+/* Settings */
+.chatify-settings {
     display: flex;
-    max-width: 560px;
-    height: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex: 1;
     width: 100%;
-    flex: 1;
+}
+
+/* Action */
+.chatify-action {
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding: 24px;
+    flex: 6;
+    width: 100%;
 }
 
 .activity-result, .activity-input {
     display: flex;
-    width: 100%;
     justify-content: center;
-    align-items: normal;
+    align-items: center;
     flex-direction: column;
+    width: 100%;
 }
 
 .activity-result {
@@ -67,16 +59,8 @@ body {
     flex: 1;
 }
 
-.activity-result-r {
-    content: "";
-    position: absolute;
-    display: flex;
+.activity-input {
     width: 100%;
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: linear-gradient(to top, transparent, transparent 85%, red 100%);
 }
 
 #form-input {
@@ -85,14 +69,10 @@ body {
     align-items: center;
     flex-direction: column;
     flex: 1;
-    max-width: 560px;
+    max-width: 720px;
     max-height: 140px;
-    height: 140px;
     width: 100%;
-}
-
-.form-input-content, .form-input-submit {
-    margin: 16px 0;
+    height: 140px;
 }
 
 .form-input-content {
@@ -100,15 +80,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: transparent;
     width: 100%;
     height: 100%;
     flex: 1;
     padding: 16px;
-    background-color: hsl(198, 38%, 95%);
     border: none;
-    border-radius: 6px;
     line-height: 1.75;
-    color: #545454;
+    color: #454545;
 }
 
 .form-input-content::placeholder {
@@ -126,6 +105,8 @@ textarea:focus, input:focus {
 }
 
 .form-input-submit {
+    position: absolute;
+    z-index: 2;
     min-width: 64px;
     max-width: 96px;
     height: 36px;
@@ -157,4 +138,57 @@ textarea:focus, input:focus {
 .activity-result::-webkit-scrollbar-track {
     background-color: transparent;
     border-radius: 2px;
+}
+
+/* Social */
+.chatify-social {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    background-color: #101d23;
+}
+
+.social-profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 32px;
+}
+
+.social-profile > * {
+    margin: 0 8px;
+}
+
+.profile-picture {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.profile-name {
+
+}
+
+.social-friends {
+    flex-direction: row;
+    flex: 1;
+}
+
+/* Miscellaneous */
+.activity-divider-full {
+    height: 1px;
+    border-radius: 50%;
+    width: 100%;
+    background-color: #EDEDED;
+}
+
+.activity-divider {
+    height: 1px;
+    border-radius: 50%;
+    width: 100%;
+    background-color: #EDEDED;
 }

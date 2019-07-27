@@ -1,11 +1,9 @@
-from typing import Optional, Awaitable
-from tornado.web import RequestHandler
 from .handler import BaseAuthHandler
 
 
 class WelcomeHandler(BaseAuthHandler):
 
     async def get(self):
-        user_auth = await self.get_current_user() is not None
+        user = await self.get_current_user()
 
-        await self.render("welcome.html", user_auth = user_auth)
+        await self.render("welcome.html", user_auth = user is not None)

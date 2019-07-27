@@ -1,8 +1,8 @@
-from model.src.handlers import BaseAppHandler
+from model.src.handlers import BaseAuthHandler
 from model.src.models import Reply, User
 
 
-class ChatHandler(BaseAppHandler):
+class ChatHandler(BaseAuthHandler):
 
     def post(self):
 

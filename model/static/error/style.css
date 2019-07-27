@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    padding: 0 8%;
+}
+
+.header {
+    display: flex;
+    flex: 3;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+.header-brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.brand-title {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #875F9A;
+}
+
+.header-auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.header-auth > * {
+    cursor: pointer;
+    font-family: Circular, Calibre, Helvetica Neue, Segoe UI, Helvetica, Arial, Lucida Grande, sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #875F9A;
+}
+
+.header-auth > *:hover {
+    font-weight: 700;
+}
+
+.placeholder, .error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.placeholder {
+    flex: 10;
+
+}
+
+.error {
+    position: absolute;
+    flex-direction: column;
+}
+
+.error > * {
+    margin: 16px 0;
+}
+
+.error-message {
+    color: #666666;
+    font-size: 48px;
+    font-family: Circular, Calibre, Helvetica Neue, Segoe UI, Helvetica, Arial, Lucida Grande, sans-serif;
+}
+
+.error-redirect {
+    color: #666666;
+    font-family: Circular, Calibre, Helvetica Neue, Segoe UI, Helvetica, Arial, Lucida Grande, sans-serif;
+}
+
+.link-value {
+    font-weight: bold;
+}

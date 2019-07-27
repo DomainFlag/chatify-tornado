@@ -1,9 +1,8 @@
-from tornado.auth import FacebookGraphMixin
-
-from model.src.handlers import BaseHandler, BaseAuthHandler
-
 import bcrypt
 import uuid
+
+from tornado.auth import FacebookGraphMixin
+from model.src.handlers import BaseHandler, BaseAuthHandler
 
 
 class AuthMessage:
@@ -56,9 +55,9 @@ class AuthSignHandler(BaseAuthHandler):
             return
 
         salt = bcrypt.gensalt(8)
-        hash = bcrypt.hashpw(password.encode(), salt)
+        hashpw = bcrypt.hashpw(password.encode(), salt)
 
-        row = ["email", email, "password", hash]
+        row = ["email", email, "password", hashpw]
         token = uuid.uuid4().hex
 
         user_id = await self.conn.incr("user_id")
@@ -71,6 +70,9 @@ class AuthSignHandler(BaseAuthHandler):
 
 
 class AuthFacebookSignHandler(BaseHandler, FacebookGraphMixin):
+
+    picture: str = "picture"
+    data: str = "data"
 
     private_keys = [["access_token", "token"], ["session_expires", "expire"]]
     public_keys = ["email", "first_name", "last_name", "name"]
@@ -85,27 +87,38 @@ class AuthFacebookSignHandler(BaseHandler, FacebookGraphMixin):
                 extra_fields = dict({"email": None})
             )
 
-            token = user.get("access_token", None)
+            if user is None:
+                self.redirect("/auth/sign", permanent = True)
+            else:
+                token = user.get("access_token", None)
 
-            row = []
-            for key in self.private_keys:
-                row.extend([key[1], user.get(key[0], None)])
+                # retrieve user's metadata
+                row = []
+                for key in self.private_keys:
+                    row.extend([key[1], user.get(key[0], None)])
 
-            row.extend(["password", ""])
+                row.extend(["password", ""])
 
-            for key in self.public_keys:
-                row.extend([key, user.get(key, None)])
+                for key in self.public_keys:
+                    row.extend([key, user.get(key, None)])
 
-            user_id = await self.conn.incr("user_id")
-            await self.conn.hmset("users:" + str(user_id), *row)
-            await self.conn.hset("tokens", token, user_id)
+                # retrieve profile picture if any
+                if self.picture in user and self.data in user.get(self.picture):
+                    picture = user.get(self.picture).get(self.data)
 
-            email = user.get("email", None)
-            if email is not None:
-                await self.conn.hset("emails", email, user_id)
+                    row.extend([self.picture, picture.get("url", "")])
 
-            self.set_secure_cookie("token", token)
-            self.redirect("/chatify", permanent = True)
+                # perform db queries
+                user_id = await self.conn.incr("user_id")
+                await self.conn.hmset("users:" + str(user_id), *row)
+                await self.conn.hset("tokens", token, user_id)
+
+                email = user.get("email", None)
+                if email is not None:
+                    await self.conn.hset("emails", email, user_id)
+
+                self.set_secure_cookie("token", token)
+                self.redirect("/chatify", permanent = True)
         else:
             self.authorize_redirect(
                 redirect_uri = 'http://localhost:8000/auth/sign/facebook',

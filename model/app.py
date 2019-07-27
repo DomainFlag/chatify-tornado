@@ -27,7 +27,8 @@ settings = {
     "login_url" : "/auth/login",
     "cookie_secret" : configuration["cookie_secret"],
     "facebook_api_key" : configuration["facebook_api_key"],
-    "facebook_secret" : configuration["facebook_secret"]
+    "facebook_secret" : configuration["facebook_secret"],
+    "default_handler_class" : handlers.NotFoundHandler
 }
 
 
@@ -36,19 +37,19 @@ def create_app():
     conn = Connection.initialize_connection()
     mess = Messenger()
 
-    bundle = dict({"conn": conn, "mess": mess})
+    bundle_bare_mode = dict({"conn": conn})
+    bundle_auth_mode = dict({"conn": conn, "mess": mess})
 
     return Application([
-        url(r"/", handlers.WelcomeHandler, {"conn": conn}),
-        url(r"/auth/sign", handlers.AuthSignHandler, {"conn": conn}),
-        url(r"/auth/sign/facebook", handlers.AuthFacebookSignHandler, {"conn": conn}),
-        url(r"/auth/login", handlers.AuthLoginHandler, {"conn": conn}),
-        url(r"/auth/logout", handlers.AuthLogoutHandler, {"conn": conn}),
-        url(r"/chatify", handlers.MainHandler, bundle),
-        url(r"/query", handlers.QueryHandler, bundle),
+        url(r"/", handlers.WelcomeHandler, bundle_bare_mode),
+        url(r"/auth/sign", handlers.AuthSignHandler, bundle_bare_mode),
+        url(r"/auth/sign/facebook", handlers.AuthFacebookSignHandler, bundle_bare_mode),
+        url(r"/auth/login", handlers.AuthLoginHandler, bundle_bare_mode),
+        url(r"/auth/logout", handlers.AuthLogoutHandler, bundle_bare_mode),
+        url(r"/chatify", handlers.MainHandler, bundle_auth_mode),
         url(r"/user", handlers.UserHandler),
-        url(r"/socket", handlers.MessageHandler, bundle),
-        url(r"/chat/input", handlers.ChatHandler, bundle)
+        url(r"/socket", handlers.MessageHandler, bundle_auth_mode),
+        url(r"/chat/input", handlers.ChatHandler, bundle_auth_mode)
     ], ** settings, ** modules)
 
 

@@ -9,15 +9,7 @@ class User(Model):
     last_name: Optional[str]
     email: Optional[str]
 
+    picture: Optional[str] = None
+
     token: Optional[str]
-    expire: Optional[str] = None
-
-    def __init__(self):
-        super().__init__()
-
-        self.name = None
-        self.first_name = None
-        self.last_name = None
-        self.email = None
-        self.token = None
-        self.expire = None
+    expire: Optional[str]

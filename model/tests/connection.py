@@ -8,13 +8,9 @@ from model.src.models import User
 class RedisCommandTest(unittest.TestCase):
 
     def test_command(self):
-        loop = asyncio.get_event_loop()
-        conn = Connection.initialize_connection(loop)
-
-        loop.run_until_complete(self.exec_redis_command(conn))
-
-        loop.run_until_complete(conn.close_connection())
-        loop.close()
+        conn = Connection.initialize_connection()
+        asyncio.run(self.exec_redis_command(conn))
+        asyncio.run(conn.close_connection())
 
     @staticmethod
     async def exec_redis_command(conn):

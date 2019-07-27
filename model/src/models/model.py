@@ -7,14 +7,17 @@ class Model:
     def encode(obj: object, default: str = "") -> List[str]:
         encoding: List[str] = []
 
-        for attr in obj.__dict__:
-            encoding.append(attr)
-            encoding.append(getattr(obj, attr, default))
+        for name in obj.__annotations__:
+            encoding.append(name)
+            encoding.append(getattr(obj, name, default))
 
         return encoding
 
     @staticmethod
-    def decode(obj: object, source: dict):
-        for attr in obj.__dict__:
-            if attr in source:
-                setattr(obj, attr, source[attr])
+    def decode(obj: object, source: dict, default: str = ""):
+        for name in obj.__annotations__:
+            if name in source:
+                value = source[name]
+
+                if value != default:
+                    setattr(obj, name, value)

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatify</title>
+    <link rel="stylesheet" href="{{ static_url('error/style.css') }}" type="text/css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-brand">
+             <p class="brand-title">Chatify</p>
+        </div>
+        <div class="header-auth"></div>
+    </div>
+    <div class="placeholder"></div>
+    <div class="error">
+        <p class="error-message">Not Found - 404</p>
+        <p class="error-redirect">Maybe, go to
+            <a class="redirect-link" href="/">
+                <span class="link-value">Main Page</span>
+            </a>
+        </p>
+    </div>
+    <script src="{{ static_url('error/script.js') }}" type="text/javascript"></script>
+</body>
+</html>

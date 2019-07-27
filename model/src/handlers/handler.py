@@ -10,10 +10,12 @@ from model.src.models import Messenger, User
 
 class BaseHandler(RequestHandler):
 
-    conn: Connection
+    conn: Optional[Connection]
+    mess: Optional[Messenger]
 
-    def initialize(self, conn: Connection):
+    def initialize(self, conn: Optional[Connection] = None, mess: Optional[Messenger] = None):
         self.conn = conn
+        self.mess = mess
 
     def data_received(self, chunk: bytes) -> Optional[Awaitable[None]]:
         pass
@@ -41,39 +43,8 @@ class BaseAuthHandler(BaseHandler):
 
         return user
 
-    # async def prepare(self):
-    #     """ middleware auth
-    #
-    #     Override for basic request handler
-    #     :return:
-    #     """""
-    #
-    #     user = await self.get_current_user()
-    #     if not user:
-    #         await self.redirect("/", permanent = True)
-    #
-    #         raise Finish()
-    #     else:
-    #         await self.base_prepare()
 
-    def base_prepare(self) -> Optional[Awaitable[None]]:
-
-        pass
-
-
-class BaseAppHandler(BaseAuthHandler):
-
-    mess: Messenger
-
-    def initialize(self, conn: Connection, mess: Messenger):
-        self.conn = conn
-        self.mess = mess
-
-
-class BaseSocketHandler(WebSocketHandler, BaseHandler):
-
-    def data_received(self, chunk: bytes) -> Optional[Awaitable[None]]:
-        pass
+class BaseSocketHandler(WebSocketHandler, BaseAuthHandler):
 
     def on_message(self, message: Union[str, bytes]) -> Optional[Awaitable[None]]:
         raise NotImplementedError

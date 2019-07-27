@@ -4,8 +4,9 @@
     box-sizing: border-box;
 }
 
-a {
+a, a:hover, a:focus, a:active {
     text-decoration: none;
+    color: inherit;
 }
 
 html, body {
@@ -142,6 +143,45 @@ body {
     margin: 12px 0;
 }
 
+.form-active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.form-active > * {
+    margin: 0 12px;
+}
+
+.auth-picture-active {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.auth-meta-active {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.auth-meta-active > * {
+    font-family: Calibre, Circular, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    margin: 4px 0;
+}
+
+.meta-email {
+    font-size: 14px;
+}
+
+.email-link {
+    font-family: Calibre, Circular, Helvetica, Arial, sans-serif;
+    color: #666666;
+}
+
 .form-element {
     display: flex;
     position: relative;
@@ -230,6 +270,17 @@ input:-webkit-autofill:active  {
 .auth-remember-text {
     font-family: Calibre, Circular, Helvetica, Arial, sans-serif;
     font-size: 14px;
+    color: #666666;
+}
+
+.redirection-bare {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: Calibre, Circular, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #666666;
 }
 
 .action-redirection {

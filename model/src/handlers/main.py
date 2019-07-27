@@ -1,21 +1,14 @@
 from tornado.web import authenticated
-from model.src.handlers import BaseAuthHandler, BaseHandler
-from model.src.connection import Connection
-from model.src.models import Messenger
+from model.src.handlers import BaseAuthHandler
 
 
-class MainHandler(BaseHandler):
-
-    mess: Messenger
-
-    def initialize(self, conn: Connection, mess: Messenger):
-        super().initialize(conn)
-
-        self.mess = mess
+class MainHandler(BaseAuthHandler):
 
     @authenticated
-    def get(self):
-        self.render("main.html")
+    async def get(self):
+        user = await self.get_current_user()
+
+        await self.render("main.html", user = user, friends = [])
 
     @authenticated
     def post(self):

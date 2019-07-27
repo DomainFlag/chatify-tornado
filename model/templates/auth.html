@@ -11,28 +11,37 @@
             </div>
             <div class="auth-divider"></div>
         </div>
-        <div class="auth-session">
-            {% if user %}
-                <div class="auth-session">
-                    {{ user.email }}
+        <div class="auth-container">
+            {% if not user %}
+                <div class="container-social">
+                    <a class="social-facebook" href="/auth/sign/facebook">{{ escape(auth.mode) }} with Facebook</a>
                 </div>
             {% end %}
-        </div>
-        <div class="auth-container">
-            <div class="container-social">
-                <a class="social-facebook" href="http://localhost:8000/auth/sign/facebook">{{ escape(auth.mode) }} with Facebook</a>
-            </div>
             <div class="container-action">
-                <div class="action-description">
-                    <div class="auth-divider description-divider"></div>
-                    <p class="description-bare">Or {{ escape(auth.mode) }} with your email</p>
-                </div>
+                {% if not user %}
+                    <div class="action-description">
+                        <div class="auth-divider description-divider"></div>
+                        <p class="description-bare">Or {{ escape(auth.mode) }} with your email</p>
+                    </div>
+                {% end %}
                 <form class="action-form" method="post" action="http://localhost:8000/auth/{{ escape(auth.auth_mode) }}" novalidate="novalidate">
                     <ul class="form-elements">
-                        <li class="form-element">
-                            <label class="auth-placeholder auth-placeholder-idle" for="auth-email">Email</label>
-                            <input id="auth-email" class="element-input form-email" type="text" name="email" autocomplete required/>
-                        </li>
+                        {% if user %}
+                            <div class="form-active">
+                                {% if user.picture %}
+                                    <img class="auth-picture-active" src="{{ user.picture }}" alt="Profile Picture"/>
+                                {% end %}
+                                <div class="auth-meta-active">
+                                     <p class="meta-name">Hi <strong>{{ user.first_name }}</strong>, there is one more step.</p>
+                                     <p class="meta-email">Linked e-mail - <em class="email-link">{{ user.email }}</em></p>
+                                </div>
+                            </div>
+                        {% else %}
+                            <li class="form-element">
+                                <label class="auth-placeholder auth-placeholder-idle" for="auth-email">Email</label>
+                                <input id="auth-email" class="element-input form-email" type="text" name="email" autocomplete required/>
+                            </li>
+                        {% end %}
                         <li class="form-element">
                             <label class="auth-placeholder auth-placeholder-idle" for="auth-password">Password</label>
                             <input id="auth-password" class="element-input form-password" type="password" name="password" autocomplete required/>
@@ -47,11 +56,17 @@
                     </div>
                 </form>
                 <div class="action-redirection">
-                    <p class="redirection-info">{{ auth.redirection }}
-                        <a href="/auth/{{ auth.redirect }}">
-                            <span class="redirection-mode">{{ auth.redirection_mode }}</span>
+                    {% if user %}
+                        <a href="/chatify">
+                            <p class="redirection-bare">Or, continue without password auth</p>
                         </a>
-                    </p>
+                    {% else %}
+                        <p class="redirection-info">{{ auth.redirection }}
+                            <a href="/auth/{{ auth.redirect }}">
+                                <span class="redirection-mode">{{ auth.redirection_mode }}</span>
+                            </a>
+                        </p>
+                    {% end %}
                 </div>
             </div>
         </div>
