@@ -2,7 +2,6 @@ from typing import List
 
 
 class Model:
-
     @staticmethod
     def encode(obj: object, default: str = "") -> List[str]:
         encoding: List[str] = []
@@ -13,11 +12,15 @@ class Model:
 
         return encoding
 
-    @staticmethod
-    def decode(obj: object, source: dict, default: str = ""):
+    @classmethod
+    def decode(cls, source: dict, default: str = "") -> 'Model':
+        obj = cls()
+
         for name in obj.__annotations__:
             if name in source:
                 value = source[name]
 
                 if value != default:
                     setattr(obj, name, value)
+
+        return obj

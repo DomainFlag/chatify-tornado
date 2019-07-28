@@ -40,4 +40,4 @@ class Application {
     }
 }
 
-let application = new Application();
+// let application = new Application();

@@ -25,7 +25,8 @@ class Connection(Redis, ABC):
                                            encoding = "utf-8")
 
     def release_connection(self) -> None:
-        asyncio.run(self.close_connection())
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self.close_connection())
 
     async def close_connection(self) -> None:
         self.close()

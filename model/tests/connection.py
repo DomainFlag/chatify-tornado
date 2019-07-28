@@ -9,18 +9,18 @@ class RedisCommandTest(unittest.TestCase):
 
     def test_command(self):
         conn = Connection.initialize_connection()
-        asyncio.run(self.exec_redis_command(conn))
-        asyncio.run(conn.close_connection())
+
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self.exec_redis_command(conn))
+
+        conn.release_connection()
 
     @staticmethod
     async def exec_redis_command(conn):
         """Redis command execution test"""
-        value = await conn.hgetall("users:21")
+        keys = await conn.keys("users:*")
 
-        user = User()
-        user.decode(user, value)
-
-        print(user.__dict__)
+        print(keys)
 
 
 if __name__ == '__main__':

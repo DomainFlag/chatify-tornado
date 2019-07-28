@@ -8,11 +8,13 @@
     <body>
         <section class="chatify-settings">
             <div class="chatify-profile">
-                <div class="social-profile">
-                    <img class="profile-picture" src="{{ user.picture }}" alt="My Profile"/>
-                    <p class="profile-name">{{ user.name }}</p>
-                </div>
-            </div>
+                {% if user %}
+                    <div class="social-profile">
+                        <img class="profile-picture" src="{{ user.picture }}" alt="My Picture"/>
+                        <p class="profile-name">{{ user.name }}</p>
+                    </div>
+                {% end %}
+            </div>`
         </section>
         <div class="activity-divider"></div>
         <section class="chatify-action">
@@ -21,24 +23,43 @@
             <div class="activity-divider-full"></div>
             <div class="activity-input">
                 <form id="form-input" method="post" action="chat/input">
-                    <textarea class="form-input-content" name="message-input" form="form-input" placeholder="Type here..."></textarea>
-                    <input class="form-input-submit" type="submit" value="SEND"/>
+                    <div class="form-input-content">
+                        <textarea class="form-input-value" name="message-input" form="form-input" placeholder="Type here..."></textarea>
+                        <div class="form-input-action">
+                            <input class="form-input-submit form-input-submit-inactive" src="{{ static_url("assets/send-button.svg") }}" type="image" alt="Submit"/>
+                        </div>
+                    </div>
+                    <div class="form-input-tools">
+                        {% set tools = ["emoji.svg", "picture.svg", "photo-camera.svg"] %}
+                        {% for tool in tools %}
+                            <img class="tools-icon" src="{{ static_url("assets/" + tool) }}" alt="Tool Action"/>
+                        {% end %}
+                    </div>
                 </form>
             </div>
         </section>
-        <div class="activity-divider"></div>
+        <div class="activity-divider activity-divider-label">
+            <p class="divider-label">Friends</p>
+        </div>
         <section class="chatify-social">
-            <div class="social-search">
-
+            <div class="social-miscellaneous social-search">
+                <img class="search-icon" src="{{ static_url("assets/magnifying-glass.svg") }}" alt="Search Icon"/>
             </div>
             <div class="social-friends">
                 {% if friends is not None %}
-                    {% for friend in friends %}
-                        <div>
-                            friend
-                        </div>
+                    {% if len(friends) %}
+                        {% for friend in friends %}
+                            <div class="social-profile social-profile-col">
+                                <img class="profile-picture profile-picture-social" src="{{ friend.picture }}" alt="{{ friend.name + " Picture"}}"/>
+                                <p class="profile-name">{{ friend.first_name }}</p>
+                            </div>
+                        {% end %}
+                    {% else %}
+                        <p class="social-new">Search for new friends</p>
                     {% end %}
                 {% end %}
+            </div>
+            <div class="social-miscellaneous">
             </div>
         </section>
         <script src="{{ static_url('main/script.js') }}" type="text/javascript">

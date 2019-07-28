@@ -23,25 +23,43 @@ class BaseHandler(RequestHandler):
 
 class BaseAuthHandler(BaseHandler):
 
-    async def get_current_user(self) -> Optional[User]:
+    async def prepare(self) -> Optional[Awaitable[None]]:
+        if self.current_user is not None:
+            return
+
         token_raw = self.get_secure_cookie("token")
         if token_raw is None:
-            return None
+            return
 
         token = escape.native_str(token_raw)
-        if token is None:
-            return None
 
         user_id = await self.conn.hget("tokens", token)
         if user_id is None:
-            return None
+            return
 
         raw_user = await self.conn.hgetall("users:" + escape.native_str(user_id))
 
-        user = User()
-        user.decode(user, raw_user)
+        self.current_user = User.decode(raw_user)
 
-        return user
+    # @gen.coroutine
+    # def get_current_user(self) -> Optional[User]:
+    #     token_raw = self.get_secure_cookie("token")
+    #     if token_raw is None:
+    #         return None
+    #
+    #     token = escape.native_str(token_raw)
+    #     if token is None:
+    #         return None
+    #
+    #     user_id = yield self.conn.hget("tokens", token)
+    #     if user_id is None:
+    #         return None
+    #
+    #     raw_user = yield self.conn.hgetall("users:" + escape.native_str(user_id))
+    #
+    #     print(self.current_user)
+    #
+    #     return User.decode(raw_user)
 
 
 class BaseSocketHandler(WebSocketHandler, BaseAuthHandler):

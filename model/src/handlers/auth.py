@@ -32,9 +32,7 @@ class AuthSignHandler(BaseAuthHandler):
     auth = AuthMessage(AuthMessage.AUTH_SIGN)
 
     async def get(self):
-        user = await self.get_current_user()
-
-        await self.render("auth.html", auth = self.auth, user = user)
+        await self.render("auth.html", auth = self.auth, user = self.current_user)
 
     async def post(self):
         email = self.get_body_argument("email", None)
@@ -136,9 +134,7 @@ class AuthLoginHandler(BaseAuthHandler):
     auth = AuthMessage(AuthMessage.AUTH_LOGIN)
 
     async def get(self):
-        user = await self.get_current_user()
-
-        await self.render("auth.html", auth = self.auth, user = user)
+        await self.render("auth.html", auth = self.auth, user = self.current_user)
 
     async def post(self):
         email = self.get_body_argument("email", None)
@@ -182,8 +178,7 @@ class AuthLoginHandler(BaseAuthHandler):
 class AuthLogoutHandler(BaseAuthHandler):
 
     async def get(self):
-        user = await self.get_current_user()
-        if user is None:
+        if self.current_user is None:
             self.write("you are not authenticated yet")
 
             return
@@ -191,4 +186,5 @@ class AuthLogoutHandler(BaseAuthHandler):
         self.conn.hdel("tokens", self.get_secure_cookie("token"))
 
         self.clear_cookie("token")
+        self.current_user = None
         self.redirect("/", permanent = True)

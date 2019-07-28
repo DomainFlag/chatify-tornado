@@ -23,7 +23,7 @@ settings = {
     "template_path" : os.path.join(os.path.dirname(__file__), "templates"),
     "static_path" : os.path.join(os.path.dirname(__file__), "static"),
     "compiled_template_cache" : False,
-    "debug" : True,
+    "debug" : False,
     "login_url" : "/auth/login",
     "cookie_secret" : configuration["cookie_secret"],
     "facebook_api_key" : configuration["facebook_api_key"],
