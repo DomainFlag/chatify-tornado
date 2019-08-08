@@ -218,6 +218,8 @@ textarea:focus, input:focus {
 }
 
 .profile-picture {
+    cursor: pointer;
+    user-select: none;
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -243,6 +245,8 @@ textarea:focus, input:focus {
 }
 
 .search-icon {
+    user-select: none;
+    cursor: pointer;
     width: 20px;
     height: 20px;
     opacity: 0.6;
@@ -250,6 +254,16 @@ textarea:focus, input:focus {
 
 .search-icon:hover {
     opacity: 1.0;
+}
+
+.search-input {
+    height: 32px;
+    background-color: transparent;
+    border: none;
+    line-height: 1.75;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: #acacac;
 }
 
 .social-friends {

@@ -1,14 +1,23 @@
+import jsonpickle
+
 from tornado.web import authenticated
 
 from model.src.handlers import BaseAuthHandler
 from model.src.models import User
 
 
-class MainHandler(BaseAuthHandler):
+class ChatifyHandler(BaseAuthHandler):
 
     @authenticated
     async def get(self):
-        await self.render("main.html", user = self.current_user, friends = await self.get_friends())
+        search = self.get_query_argument("search", None)
+
+        if search is not None:
+            friends = [ friend for friend in await self.get_friends() if search in friend.name ]
+
+            self.write(jsonpickle.encode(friends))
+        else:
+            await self.render("chatify.html", user = self.current_user, friends = await self.get_friends())
 
     @authenticated
     def post(self):

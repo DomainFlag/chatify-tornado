@@ -1,7 +1,7 @@
 from .handler import BaseHandler, BaseAuthHandler, BaseSocketHandler
 
 from .welcome import WelcomeHandler
-from .main import MainHandler
+from .chatify import ChatifyHandler
 from .error import NotFoundHandler
 
 from .auth import AuthSignHandler, AuthFacebookSignHandler, AuthLoginHandler, AuthLogoutHandler
