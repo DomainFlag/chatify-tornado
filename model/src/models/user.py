@@ -1,15 +1,17 @@
-from typing import Optional, Type
-from model.src.models import Model
+from typing import Optional
+from model.src.models import Model, Picture
 
 
 class User(Model):
 
-    name: Optional[str]
-    first_name: Optional[str]
-    last_name: Optional[str]
-    email: Optional[str]
+    identifier = "users"
 
-    picture: Optional[str] = None
+    name: Optional[str] = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    email: Optional[str] = None
 
-    token: Optional[str]
-    expire: Optional[str]
+    picture: Optional[Picture] = Picture()
+
+    token: Optional[str] = None
+    expire: Optional[str] = None

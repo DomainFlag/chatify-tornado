@@ -10,10 +10,17 @@
         <section class="chatify-settings">
             <div class="chatify-profile">
                 {% if user %}
-                    <div class="social-profile">
-                        <img class="profile-picture" src="{{ user.picture }}" alt="My Picture"/>
-                        <p class="profile-name">{{ user.name }}</p>
-                    </div>
+                    <a class="" href="/account">
+                        <div class="social-profile">
+                            {% if user.picture %}
+                                {% set url = user.picture.url if not user.picture.local else static_url(user.picture.url) %}
+                                <img class="profile-picture" src="{{ url }}" alt="My Picture"/>
+                            {% else %}
+                                <div class="profile-picture-placeholder"></div>
+                            {% end %}
+                            <p class="profile-name">{{ user.name }}</p>
+                        </div>
+                    </a>
                 {% end %}
             </div>`
         </section>
@@ -23,12 +30,15 @@
             </div>
             <div class="activity-divider-full"></div>
             <div class="activity-input">
-                <form id="form-input" method="post" action="chat/input">
+                <div class="form-input">
                     <div class="form-input-content">
                         <textarea class="form-input-value" name="message-input" ng-model="chatInputValue"
-                                  ng-focus="chatFocusIn()" ng-focusout="chatFocusOut()" form="form-input" placeholder="Type here..."></textarea>
+                                  ng-focus="chatFocusIn()" ng-focusout="chatFocusOut()" form="form-input"
+                                  placeholder="Type here..."></textarea>
                         <div class="form-input-action">
-                            <input class="form-input-submit" ng-class="{'form-input-submit-inactive': !chatInputValue}" src="{{ static_url("assets/send-button.svg") }}" type="image" alt="Submit"/>
+                            <img class="form-input-submit" ng-class="{'form-input-submit-inactive': !chatInputValue}"
+                                 ng-click="chatInputAction()" src="{{ static_url("assets/send-button.svg") }}"
+                                 alt="Submit"/>
                         </div>
                     </div>
                     <div class="form-input-tools">
@@ -37,7 +47,7 @@
                             <img class="tools-icon" src="{{ static_url("assets/" + tool) }}" alt="Tool Action"/>
                         {% end %}
                     </div>
-                </form>
+                </div>
             </div>
         </section>
         <div class="activity-divider activity-divider-label">
@@ -62,13 +72,23 @@
                         <p class="social-new">Nothing could be found.</p>
                     </div>
                 </div>
-                <div ng-if="!search">
+                <div class="friends-container" ng-if="!search">
                     {% if friends is not None %}
                         {% if len(friends) %}
                             {% for friend in friends %}
                                 <div class="social-profile social-profile-col">
-                                    <img class="profile-picture profile-picture-social" src="{{ friend.picture }}" alt="{{ friend.name + " Picture"}}"/>
-                                    <p class="profile-name">{{ friend.first_name }}</p>
+                                    {% if friend.picture %}
+                                        {% set url = friend.picture.url if not friend.picture.local else static_url(friend.picture.url) %}
+                                        <img class="profile-picture profile-picture-social" src="{{ url }}"
+                                             alt="{{ friend.name + " Picture"}}"/>
+                                    {% else %}
+                                        <div class="profile-picture-placeholder"></div>
+                                    {% end %}
+                                    {% if friend.first_name %}
+                                        <p class="profile-name">{{ friend.first_name }}</p>
+                                    {% else %}
+                                        <p class="profile-name">{{ friend.name }}</p>
+                                    {% end %}
                                 </div>
                             {% end %}
                         {% else %}
@@ -80,8 +100,6 @@
             <div class="social-miscellaneous">
             </div>
         </section>
-        <script src="{{ static_url('chatify/script.js') }}" type="text/javascript">
-            let application = new Application();
-        </script>
+        <script src="{{ static_url('chatify/script.js') }}" type="text/javascript"></script>
     </body>
  </html>

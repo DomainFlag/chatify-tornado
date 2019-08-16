@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="account">
+    <head>
+        <meta charset="UTF-8">
+        <title>Chatify</title>
+        <link rel="stylesheet" href="{{ static_url('account/style.css') }}" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    </head>
+    <body ng-controller="settings">
+        <section class="header">
+            <a href="javascript:history.back()">
+                <p class="header-finish">Go Back</p>
+            </a>
+            <div class="settings-state">
+                <p class="state-message" ng-if="state.edit">[[ state.message ]]</p>
+            </div>
+        </section>
+        <section class="account">
+            <div class="account-profile">
+                <div class="profile-picture">
+                    <div class="picture-content" ng-mouseover="focusImgEdit()" ng-mouseleave="blurImgEdit()">
+                        {% set className = "picture-placeholder" if not user.picture else "picture-link" %}
+                        <img class="{{ className }}" {% if user.picture %} src="{{ static_url(user.picture) }}"
+                                {% end %}/>
+                        <div class="picture-hover" ng-if="state.focus" ng-click="uploadTriggerFile()">
+                            <p class="hover-text">Edit</p>
+                        </div>
+                    </div>
+                    <input class="picture-upload" type="file" id="file"
+                           onchange="angular.element(this).scope().uploadFile(this.files)"/>
+                </div>
+                <p class="profile-email"><span class="helper-text">Linked account:</span> {{ user.email }}</p>
+                <p class="profile-name">{{ user.name }}</p>
+            </div>
+            <div class="account-action" ng-if="state.edit">
+                <button class="action action-cancel">Cancel</button>
+                <button class="action action-save" ng-click="applyChanges()">Save</button>
+            </div>
+        </section>
+        <script src="{{ static_url('account/script.js') }}" type="text/javascript"></script>
+    </body>
+ </html>

@@ -23,7 +23,7 @@ settings = {
     "template_path" : os.path.join(os.path.dirname(__file__), "templates"),
     "static_path" : os.path.join(os.path.dirname(__file__), "static"),
     "compiled_template_cache" : False,
-    "debug" : True,
+    "debug" : False,
     "login_url" : "/auth/login",
     "cookie_secret" : configuration["cookie_secret"],
     "facebook_api_key" : configuration["facebook_api_key"],
@@ -47,9 +47,8 @@ def create_app():
         url(r"/auth/login", handlers.AuthLoginHandler, bundle_bare_mode),
         url(r"/auth/logout", handlers.AuthLogoutHandler, bundle_bare_mode),
         url(r"/chatify", handlers.ChatifyHandler, bundle_auth_mode),
-        url(r"/user", handlers.UserHandler),
-        url(r"/socket", handlers.MessageHandler, bundle_auth_mode),
-        url(r"/chat/input", handlers.ChatHandler, bundle_auth_mode)
+        url(r"/account", handlers.AccountHandler, bundle_auth_mode),
+        url(r"/socket", handlers.MessageHandler, bundle_auth_mode)
     ], ** settings, ** modules)
 
 

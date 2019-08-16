@@ -1,10 +1,15 @@
-from time import gmtime, strftime
+import time
 
 
 class Reply:
 
-    def __init__(self, author, content):
+    author: object
+    recipient: str
+    content: str
+
+    def __init__(self, author, recipient, content):
 
         self.author = author
+        self.recipient = recipient
         self.content = content
-        self.time = strftime("%M:%S", gmtime())
+        self.time = int(time.time())

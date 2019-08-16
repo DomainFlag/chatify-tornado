@@ -3,6 +3,7 @@ import uuid
 
 from tornado.auth import FacebookGraphMixin
 from model.src.handlers import BaseHandler, BaseAuthHandler
+from model.src.models import User, Picture
 
 
 class AuthMessage:
@@ -15,16 +16,17 @@ class AuthMessage:
     redirect: str
     redirection: str
     redirection_mode: str
+    auth_sign: bool
 
     def __init__(self, auth_mode):
 
         self.auth_mode = auth_mode
-        auth_sign: bool = self.auth_mode == AuthMessage.AUTH_SIGN
+        self.auth_sign = self.auth_mode == AuthMessage.AUTH_SIGN
 
-        self.mode = "sign up" if auth_sign else "login"
-        self.redirect = "login" if auth_sign else "sign"
-        self.redirection = "already have an account?" if auth_sign else "don't have an account, yet?"
-        self.redirection_mode = "login" if auth_sign else "sign up"
+        self.mode = "sign up" if self.auth_sign else "login"
+        self.redirect = "login" if self.auth_sign else "sign"
+        self.redirection = "already have an account?" if self.auth_sign else "don't have an account, yet?"
+        self.redirection_mode = "login" if self.auth_sign else "sign up"
 
 
 class AuthSignHandler(BaseAuthHandler):
@@ -35,27 +37,31 @@ class AuthSignHandler(BaseAuthHandler):
         await self.render("auth.html", auth = self.auth, user = self.current_user)
 
     async def post(self):
-        email = self.get_body_argument("email", None)
+        email, name = self.get_body_argument("email", None), self.get_body_argument("name", None)
 
-        if email is not None:
-            result = await self.conn.hget("emails", email)
-            if result == 0:
-                self.write("login name is already taken")
+        if email is None or name is None:
+            self.write("no empty fields is allowed")
+            await self.flush()
+            return
 
-                return
+        result = await self.conn.hget("emails", email)
+        if result == 0:
+            self.write("login name is already taken")
+
+            return
 
         password = self.get_body_argument("password", None)
-
         if password is None:
             self.write("no empty password is allowed")
             await self.flush()
 
             return
 
+        # TODO(1) Blocking operation, fix needed
         salt = bcrypt.gensalt(8)
         hashpw = bcrypt.hashpw(password.encode(), salt)
 
-        row = ["email", email, "password", hashpw]
+        row = ["email", email, "password", hashpw, "name", name]
         token = uuid.uuid4().hex
 
         user_id = await self.conn.incr("user_id")
@@ -102,11 +108,18 @@ class AuthFacebookSignHandler(BaseHandler, FacebookGraphMixin):
 
                 # retrieve profile picture if any
                 if self.picture in user and self.data in user.get(self.picture):
-                    picture = user.get(self.picture).get(self.data)
+                    picture_source = user.get(self.picture).get(self.data)
 
-                    row.extend([self.picture, picture.get("url", "")])
+                    picture = await Picture.decode_source(picture_source)
+                    picture.local = False
 
-                # perform db queries
+                    # perform picture db queries
+                    picture.key = await self.conn.incr("picture_id")
+                    await self.conn.hmset("pictures:" + str(picture.key), *picture.encode_model())
+
+                    row.extend(["picture", str(picture.key)])
+
+                # perform user db queries
                 user_id = await self.conn.incr("user_id")
                 await self.conn.hmset("users:" + str(user_id), *row)
                 await self.conn.hset("tokens", token, user_id)

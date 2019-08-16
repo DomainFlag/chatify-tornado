@@ -38,15 +38,29 @@ chatify.controller('main', ['$scope', '$http', ($scope, $http) => {
         $scope.chatInputFocus = false;
     };
 
+    $scope.chatInputAction = (event) => {
+        if($scope.chatInputValue && $scope.chatInputValue.length > 0) {
+            let payload = JSON.stringify({
+                "data" : $scope.chatInputValue,
+                "timestamp" : (new Date()).getTime()
+            });
+
+            $http.post("http://localhost:8000/chatify", payload).then((response) => {
+                $scope.chatInputValue = "";
+                if(event) {
+                    event.preventDefault();
+                }
+            }, (response) => {
+                console.error(response.data);
+            });
+        }
+    };
+
     document.addEventListener("keypress", (event) => {
         let key = event.which || event.keyCode;
 
-        if(key === 13 && $scope.chatInputFocus && $scope.chatInputValue && $scope.chatInputValue.length > 0) {
-            // TODO(1) do something with the input
-            $scope.chatInputValue = "";
-            $scope.$apply();
-
-            event.preventDefault();
+        if(key === 13 && $scope.chatInputFocus) {
+            $scope.chatInputAction();
         }
     });
 }]);
@@ -79,5 +93,3 @@ class Application {
         });
     }
 }
-
-// let application = new Application();

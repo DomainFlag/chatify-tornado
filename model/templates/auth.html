@@ -29,7 +29,7 @@
                         {% if user %}
                             <div class="form-active">
                                 {% if user.picture %}
-                                    <img class="auth-picture-active" src="{{ user.picture }}" alt="Profile Picture"/>
+                                    <img class="auth-picture-active" src="{{ user.picture.url }}" alt="Profile Picture"/>
                                 {% end %}
                                 <div class="auth-meta-active">
                                      <p class="meta-name">Hi <strong>{{ user.first_name }}</strong>, there is one more step.</p>
@@ -39,13 +39,19 @@
                         {% else %}
                             <li class="form-element">
                                 <label class="auth-placeholder auth-placeholder-idle" for="auth-email">Email</label>
-                                <input id="auth-email" class="element-input form-email" type="text" name="email" autocomplete required/>
+                                <input id="auth-email" class="element-input" type="text" name="email" autocomplete required/>
                             </li>
                         {% end %}
                         <li class="form-element">
                             <label class="auth-placeholder auth-placeholder-idle" for="auth-password">Password</label>
-                            <input id="auth-password" class="element-input form-password" type="password" name="password" autocomplete required/>
+                            <input id="auth-password" class="element-input" type="password" name="password" autocomplete required/>
                         </li>
+                        {% if auth.auth_sign %}
+                            <li class="form-element">
+                                <label class="auth-placeholder auth-placeholder-idle" for="auth-name">Name</label>
+                                <input id="auth-name" class="element-input" type="text" name="name" required/>
+                            </li>
+                        {% end %}
                     </ul>
                     <div class="form-action">
                         <input class="auth-submit" type="submit" value="{{ escape(auth.mode) }}"/>
